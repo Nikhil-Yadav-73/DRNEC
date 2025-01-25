@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         loadTokens();
     }, []);
 
-    const loginUser = async (email, password, navigation) => { // Expect navigation as an argument
+    const loginUser = async (email, password, navigation) => {
         try {
             console.log("Sending login request with:", email, password);
 
@@ -46,12 +46,12 @@ export const AuthProvider = ({ children }) => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("Login response data:", data);
+                // console.log("Login response data:", data);
                 const decodedUser = jwtDecode(data.access);
                 setAuthTokens(data);
                 setUser(decodedUser);
                 await AsyncStorage.setItem('authTokens', JSON.stringify(data));
-                navigation.navigate("HomePage"); // Navigate after successful login
+                navigation.navigate("HomePage");
             } else {
                 const errorData = await response.json();
                 console.log("Response status:", response.status);
