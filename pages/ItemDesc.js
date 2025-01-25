@@ -91,7 +91,7 @@ const ItemDesc = ({ route }) => {
             <Text>{recommendedItem.name}</Text>
             <Button
               title="View Product"
-              onPress={() => navigation.navigate('ItemDesc', { ProductId: recommendedItem.id })}
+              onPress={() => navigation.navigate('ItemDesc', { productId: recommendedItem.id })}
             />
           </View>
         ))}
