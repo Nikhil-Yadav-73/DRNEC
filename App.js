@@ -9,6 +9,7 @@ import ItemDesc from "./pages/ItemDesc";
 import Cart from "./pages/Cart";
 import Category from "./pages/Category";
 import ProfilePage from "./pages/ProfilePage";
+import EditProfile from "./pages/EditProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const AppNavigator = () => {
       <Stack.Screen name="ItemDesc" component={ItemDesc} />
       <Stack.Screen name="Category" component={Category} />
       <Stack.Screen name="Profile" component={ProfilePage} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   );
 };

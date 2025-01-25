@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, Image, Button, Alert, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import AuthContext from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import MyFooter from '../components/MyFooter';
-import MyNavbar from '../components/MyNavbar'; 
+import MyNavbar from '../components/MyNavbar';
 
 const ProfilePage = () => {
   const { user, authTokens, logoutUser } = useContext(AuthContext);
@@ -55,17 +55,17 @@ const ProfilePage = () => {
   }, [userprofile, userdata]);
 
   const to_edit_profile = () => {
-    navigation.navigate('EditProfile'); // Navigate to edit profile screen
+    navigation.navigate('EditProfile');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Navbar */}
       <MyNavbar />
 
-      {/* Profile Section */}
       <View style={styles.profileCard}>
-        <Image source={{ uri: profile.pfp }} style={styles.profileImage} />
+        <View style={styles.profileImageContainer}>
+          <Image source={{ uri: profile.pfp }} style={styles.profileImage} />
+        </View>
         <View style={styles.profileInfo}>
           <Text style={styles.profileName}>{profile.name}</Text>
           <Text style={styles.profileText}><Text style={styles.boldText}>Email:</Text> {profile.email}</Text>
@@ -74,14 +74,12 @@ const ProfilePage = () => {
             <Text style={styles.boldText}>Location:</Text> {profile.city}, {profile.state}, {profile.country}
           </Text>
 
-          {/* Edit Profile Button */}
           <TouchableOpacity onPress={to_edit_profile} style={styles.editButton}>
             <Text style={styles.editButtonText}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      {/* Footer */}
       <MyFooter />
     </ScrollView>
   );
@@ -89,24 +87,25 @@ const ProfilePage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     backgroundColor: '#fff',
   },
   profileCard: {
-    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 20,
     borderRadius: 10,
     backgroundColor: '#f5f5f5',
     padding: 15,
   },
+  profileImageContainer: {
+    marginBottom: 15,
+  },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginRight: 20,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
   },
   profileInfo: {
-    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileName: {
     fontSize: 24,
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: 16,
     marginVertical: 5,
+    textAlign: 'center',
   },
   boldText: {
     fontWeight: 'bold',
