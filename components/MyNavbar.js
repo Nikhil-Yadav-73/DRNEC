@@ -28,6 +28,11 @@ const MyNavbar = () => {
     ]);
   };
 
+  const clearSearchResults = () => {
+    setSearchItems([]);
+    setQuery("");
+  };
+
   const handleSearchItems = async () => {
     try {
       const response = await fetch(
@@ -102,7 +107,7 @@ const MyNavbar = () => {
 
   const renderSearchItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate("ProductDetails", { id: item.id })}
+      onPress={() => navigation.navigate("ItemDesc", { productId: item.id })}
       style={styles.searchItem}
     >
       <Text style={styles.itemName}>{item.name}</Text>
@@ -112,7 +117,6 @@ const MyNavbar = () => {
 
   return (
     <View>
-      {/* Navbar Header */}
       <View style={styles.navbar}>
         <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Text style={styles.brand}>ShopNik</Text>
@@ -133,7 +137,8 @@ const MyNavbar = () => {
         </View>
       </View>
 
-      {/* Search Bar */}
+      // search bar and results baad mein component mein laane hain
+
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
@@ -147,9 +152,8 @@ const MyNavbar = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Search Results */}
       {searchItems.length > 0 && (
-        <View>
+        <View style={styles.resultsContainer}>
           <Text style={styles.resultsHeader}>
             Search results for '{query}'
           </Text>
@@ -160,6 +164,13 @@ const MyNavbar = () => {
             contentContainerStyle={styles.resultsList}
           />
         </View>
+      )}
+
+
+      {searchItems.length > 0 && (
+        <TouchableOpacity onPress={clearSearchResults} style={styles.closeButton}>
+          <Ionicons name="close-circle-outline" size={24} color="#000" />
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -227,5 +238,10 @@ const styles = StyleSheet.create({
   itemPrice: {
     fontSize: 14,
     color: "#777",
+  },
+  closeButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 8,
   },
 });

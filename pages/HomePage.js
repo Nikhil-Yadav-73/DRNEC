@@ -5,8 +5,9 @@ import MyNavbar from "../components/MyNavbar";
 import MyFooter from "../components/MyFooter";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
+import { SearchBar } from "react-native-screens";
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
   const [categories, setCategories] = useState([]);
   const [homeItems, setHomeItems] = useState([]);
   const { authTokens, logoutUser } = useContext(AuthContext);
@@ -80,10 +81,9 @@ const HomePage = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Navbar */}
       <MyNavbar />
-
-      {/* Categories Carousel */}
+      <SearchBar navigation={ navigation } />
+      
       <View style={styles.carouselContainer}>
         <TouchableOpacity onPress={prevSlide} style={styles.carouselButton}>
           <Text style={styles.carouselButtonText}>&#8249;</Text>
@@ -101,7 +101,6 @@ const HomePage = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Products Grid */}
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
           <ProductCard
@@ -118,7 +117,6 @@ const HomePage = () => {
         ))}
       </View>
 
-      {/* Footer */}
       <MyFooter />
     </ScrollView>
   );
@@ -136,6 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 16,
+    paddingTop:10,
   },
   carousel: {
     paddingHorizontal: 8,
@@ -152,5 +151,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 8,
+  },
+  searchcomponent: {
+    paddingTop: 2,
+    paddingBottom: 2,
   },
 });
