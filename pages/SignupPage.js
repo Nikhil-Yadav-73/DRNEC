@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ const SignupPage = () => {
         const decodedUser = jwtDecode(data.access);
         await AsyncStorage.setItem("authTokens", JSON.stringify(data));
         console.log("Login successful, user:", decodedUser);
-        navigation.navigate("Home");
+        navigation.navigate("HomePage");
       } else {
         const errorData = await response.json();
         Alert.alert("Login Failed", errorData.detail || "Invalid credentials");
@@ -46,7 +46,7 @@ const SignupPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/signup/", {
+      const response = await fetch("http://192.168.1.8:8000/api/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

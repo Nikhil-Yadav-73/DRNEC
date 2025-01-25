@@ -3,8 +3,8 @@ import { View, Text, FlatList, Image, TouchableOpacity, Alert, StyleSheet, Scrol
 import AuthContext from "../context/AuthContext";
 import MyNavbar from "../components/MyNavbar";
 import MyFooter from "../components/MyFooter";
-// import CategoryCard from "../components/CategoryCard";
-// import ProductCard from "../components/ProductCard";
+import CategoryCard from "../components/CategoryCard";
+import ProductCard from "../components/ProductCard";
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -20,7 +20,7 @@ const HomePage = () => {
 
   const getHomeItems = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/items/", {
+      const response = await fetch("http://192.168.1.8:8000/api/items/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const HomePage = () => {
 
   const getCategories = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/categories/", {
+      const response = await fetch("http://192.168.1.8:8000/api/categories/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const HomePage = () => {
       </View>
 
       {/* Products Grid */}
-      {/* <View style={styles.productGrid}>
+      <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
           <ProductCard
             key={homeItem.id}
@@ -116,7 +116,7 @@ const HomePage = () => {
             link2={homeItem.link2}
           />
         ))}
-      </View> */}
+      </View>
 
       {/* Footer */}
       <MyFooter />
