@@ -1640,6 +1640,13 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-voice/voice@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.npmjs.org/@react-native-voice/voice/-/voice-3.1.5.tgz"
+  integrity sha512-lMLOP0bEIXUKJnmKs0QFLy79IbeIky4PU2GWGh9dmYM+IWmJ54qiBZvwfXmA/Ekk7MlyQ65PvfW69j0auGxqRw==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native/assets-registry@0.76.6":
   version "0.76.6"
   resolved "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.76.6.tgz"
@@ -5052,7 +5059,12 @@ react-native-vector-icons@^10.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@^0.0.0-0 || >=0.65 <1.0", react-native@0.76.6:
+react-native-voice@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/react-native-voice/-/react-native-voice-0.3.0.tgz"
+  integrity sha512-puSrXCNn1MM03UZkY8q+GW931OqBCEBCiupNK4vD8i49esGqRDDmzv8sRYyEgXj5ScVDKe6lnlKCmJSn5Wo2UA==
+
+react-native@*, "react-native@^0.0.0-0 || >=0.65 <1.0", "react-native@>= 0.60.2", react-native@>=0.40.0, react-native@0.76.6:
   version "0.76.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.76.6.tgz"
   integrity sha512-AsRi+ud6v6ADH7ZtSOY42kRB4nbM0KtSu450pGO4pDudl4AEK/AF96ai88snb2/VJJSGGa/49QyJVFXxz/qoFg==
