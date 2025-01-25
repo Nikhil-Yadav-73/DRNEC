@@ -6,7 +6,6 @@ const ProductCard = ({ id, name, price, image, rating, reviews }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    // Navigate to the product detail screen
     navigation.navigate('ItemDesc', { productId: id });
   };
 

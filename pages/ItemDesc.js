@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 import axios from 'axios'; 
 
 const ItemDesc = ({ route }) => {
-  const { id } = route.params;
+    const { productId } = route.params;
   const { user} = useContext(AuthContext);
   const [item, setItem] = useState(null);
   const [recommendedItems, setRecommendedItems] = useState([]);
@@ -15,7 +15,7 @@ const ItemDesc = ({ route }) => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.8:8000/api/items/${id}`);
+        const response = await axios.get(`http://192.168.1.8:8000/api/items/${productId}`);
         setItem(response.data);
       } catch (error) {
         console.error('Error fetching item:', error);
@@ -24,7 +24,7 @@ const ItemDesc = ({ route }) => {
 
     const fetchRecommendedItems = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.8:8000/api/items/recommended/${id}`);
+        const response = await axios.get(`http://192.168.1.8:8000/api/items/recommended/${productId}`);
         setRecommendedItems(response.data);
       } catch (error) {
         console.error('Error fetching recommended items:', error);
@@ -33,11 +33,11 @@ const ItemDesc = ({ route }) => {
 
     fetchItem();
     fetchRecommendedItems();
-  }, [id]);
+  }, [productId]);
 
   const handleAddToCart = async () => {
     try {
-      const response = await fetch(`http://192.168.1.8:8000/api/items/add_to_cart/${user.user_id}/${id}`, {
+      const response = await fetch(`http://192.168.1.8:8000/api/items/add_to_cart/${user.user_id}/${productId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -56,12 +56,13 @@ const ItemDesc = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{item.name}</Text>
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <Text style={styles.text}>{item.description}</Text>
-      <Text style={styles.text}><strong>Price:</strong> ${item.price}</Text>
-      <Text style={styles.text}><strong>Material:</strong> {item.material}</Text>
-      <Text style={styles.text}><strong>Category:</strong> {item.category.name}</Text>
+        <Text style={styles.header}>{item.name}</Text>
+        <Image source={{ uri: item.image }} style={styles.image} />
+        <Text style={styles.text}>{item.description}</Text>
+        <Text style={[styles.text, styles.boldText]}>Price: ${item.price}</Text>
+        <Text style={[styles.text, styles.boldText]}>Material: {item.material}</Text>
+        <Text style={[styles.text, styles.boldText]}>Category: {item.category.name}</Text>
+
 
       {item.category.name === 'kurti' && (
         <View style={styles.sizeSelectContainer}>
@@ -90,7 +91,7 @@ const ItemDesc = ({ route }) => {
             <Text>{recommendedItem.name}</Text>
             <Button
               title="View Product"
-              onPress={() => navigation.navigate('ItemDesc', { id: recommendedItem.id })}
+              onPress={() => navigation.navigate('ItemDesc', { ProductId: recommendedItem.id })}
             />
           </View>
         ))}

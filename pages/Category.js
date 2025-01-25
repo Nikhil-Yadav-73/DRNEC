@@ -42,7 +42,7 @@ const Category = ({ route }) => {
 
             <Button
               title="View Product"
-              onPress={() => navigation.navigate('ItemDesc', { id: item.id })}
+              onPress={() => navigation.navigate('ItemDesc', { productId: item.id })}
             />
           </View>
         )}
