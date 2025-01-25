@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -54,7 +48,7 @@ const Checkout = () => {
           </View>
           <Button
             title="Go to Home"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('HomePage')}
             color="#007bff"
           />
         </View>
