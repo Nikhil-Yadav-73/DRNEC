@@ -91,15 +91,21 @@ const HomePage = ({navigation}) => {
         <FlatList
           horizontal
           data={categories.slice(currentIndex, currentIndex + itemsPerPage)}
-          renderItem={({ item }) => <CategoryCard key={item.id} id={item.id} category={item.name} />}
+          renderItem={({ item }) => (
+            <View style={styles.carouselItem}>
+              <CategoryCard key={item.id} id={item.id} category={item.name} />
+            </View>
+          )}
           keyExtractor={(item) => item.id.toString()}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.carousel}
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
         />
         <TouchableOpacity onPress={nextSlide} style={styles.carouselButton}>
           <Text style={styles.carouselButtonText}>&#8250;</Text>
         </TouchableOpacity>
       </View>
+
 
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
@@ -125,6 +131,12 @@ const HomePage = ({navigation}) => {
 export default HomePage;
 
 const styles = StyleSheet.create({
+  carouselItem: {
+    marginHorizontal: 5,
+  },
+  itemSeparator: {
+    width: 10,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: "#fff",
