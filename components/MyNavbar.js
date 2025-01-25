@@ -137,8 +137,6 @@ const MyNavbar = () => {
         </View>
       </View>
 
-      // search bar and results baad mein component mein laane hain
-
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}

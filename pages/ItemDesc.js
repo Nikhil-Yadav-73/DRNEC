@@ -59,7 +59,7 @@ const ItemDesc = ({ route }) => {
         <Text style={styles.header}>{item.name}</Text>
         <Image source={{ uri: item.image }} style={styles.image} />
         <Text style={styles.text}>{item.description}</Text>
-        <Text style={[styles.text, styles.boldText]}>Price: ${item.price}</Text>
+        <Text style={[styles.text, styles.boldText]}>Price: ₹ {item.price}</Text>
         <Text style={[styles.text, styles.boldText]}>Material: {item.material}</Text>
         <Text style={[styles.text, styles.boldText]}>Category: {item.category.name}</Text>
 
