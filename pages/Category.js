@@ -68,19 +68,21 @@ const Category = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#fff',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    paddingTop: 16,
+    textAlign: 'center',
   },
   productGrid: {
     paddingBottom: 16,
   },
   row: {
     justifyContent: 'space-between',
+    padding: 16,
   },
   productCard: {
     width: '48%',
