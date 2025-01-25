@@ -31,7 +31,7 @@ const MyNavbar = () => {
   const handleSearchItems = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/search_items/?query=${query}`,
+        `http://192.168.1.8:8000/api/search_items/?query=${query}`,
         {
           method: "GET",
           headers: {
@@ -55,7 +55,7 @@ const MyNavbar = () => {
   const handleSearchCategories = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/search_categories/?query=${query}`,
+        `http://192.168.1.8:8000/api/search_categories/?query=${query}`,
         {
           method: "GET",
           headers: {
@@ -79,7 +79,7 @@ const MyNavbar = () => {
   const handleSearchPosts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/search_posts/?query=${query}`,
+        `http://192.168.1.8:8000/api/search_posts/?query=${query}`,
         {
           method: "GET",
           headers: {
