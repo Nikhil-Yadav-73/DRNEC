@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     backgroundColor: "#f8f9fa",
-    paddingTop: 30,
+    paddingTop: 40,
   },
   brand: {
     fontSize: 20,

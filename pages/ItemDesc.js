@@ -108,7 +108,6 @@ const ItemDesc = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 30,
     flex: 1,
   },
   header: {
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   navstyle: {
-    paddingTop: 40,
+    
   },
 });
 
