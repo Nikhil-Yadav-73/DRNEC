@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, FlatList, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../context/AuthContext';
-import { FaTrash } from 'react-icons/fa';
+import AuthContext from '../context/AuthContext';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -164,6 +163,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
+    paddingTop: 30,
   },
   header: {
     fontSize: 24,

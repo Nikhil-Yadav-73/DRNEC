@@ -7,7 +7,7 @@ const ProductCard = ({ id, name, price, image, rating, reviews }) => {
 
   const handlePress = () => {
     // Navigate to the product detail screen
-    navigation.navigate('ProductDesc', { productId: id });
+    navigation.navigate('ItemDesc', { productId: id });
   };
 
   return (
@@ -21,7 +21,7 @@ const ProductCard = ({ id, name, price, image, rating, reviews }) => {
       </TouchableOpacity>
       <View style={styles.cardBody}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.price}>₹ {price}</Text>
       </View>
       <TouchableOpacity onPress={handlePress} style={styles.button}>
         <Text style={styles.buttonText}>View Product</Text>

@@ -102,7 +102,7 @@ const MyNavbar = () => {
 
   const renderSearchItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation("ProductDetails", { id: item.id })}
+      onPress={() => navigation.navigate("ProductDetails", { id: item.id })}
       style={styles.searchItem}
     >
       <Text style={styles.itemName}>{item.name}</Text>
@@ -114,18 +114,18 @@ const MyNavbar = () => {
     <View>
       {/* Navbar Header */}
       <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation("Home")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Text style={styles.brand}>ShopNik</Text>
         </TouchableOpacity>
         <View style={styles.iconGroup}>
           <TouchableOpacity
-            onPress={() => navigation("Cart")}
+            onPress={() => navigation.navigate("Cart")}
             style={styles.icon}
           >
             <Ionicons name="cart-outline" size={24} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation("Profile")}
+            onPress={() => navigation.navigate("Profile")}
             style={styles.icon}
           >
             <Ionicons name="person-outline" size={24} color="#000" />
