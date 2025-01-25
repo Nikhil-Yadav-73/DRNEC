@@ -127,6 +127,7 @@ export default HomePage;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    paddingTop: 10,
     backgroundColor: "#fff",
     paddingBottom: 16,
   },

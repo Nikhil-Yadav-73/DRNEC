@@ -22,9 +22,9 @@ const ProductCard = ({ id, name, price, image, rating, reviews }) => {
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.price}>₹ {price}</Text>
       </View>
-      <TouchableOpacity onPress={handlePress} style={styles.button}>
+      {/* <TouchableOpacity onPress={handlePress} style={styles.button}>
         <Text style={styles.buttonText}>View Product</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, Image, Button, Picker, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { TouchableOpacity, ScrollView, View, Text, Image, Button, Picker, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import axios from 'axios'; 
+import MyNavbar from '../components/MyNavbar';
 
 const ItemDesc = ({ route }) => {
     const { productId } = route.params;
@@ -55,7 +56,9 @@ const ItemDesc = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.navstyle}>
+      <MyNavbar  />
+      <View style={styles.container}>
         <Text style={styles.header}>{item.name}</Text>
         <Image source={{ uri: item.image }} style={styles.image} />
         <Text style={styles.text}>{item.description}</Text>
@@ -86,23 +89,26 @@ const ItemDesc = ({ route }) => {
       <Text style={styles.recommendedTitle}>Recommended Products</Text>
       <View style={styles.recommendedItemsContainer}>
         {recommendedItems.map((recommendedItem) => (
-          <View key={recommendedItem.id} style={styles.recommendedItemCard}>
+          <TouchableOpacity
+            key={recommendedItem.id}
+            style={styles.recommendedItemCard}
+            onPress={() => navigation.navigate('ItemDesc', { productId: recommendedItem.id })}
+          >
             <Image source={{ uri: recommendedItem.image }} style={styles.recommendedImage} />
             <Text>{recommendedItem.name}</Text>
-            <Button
-              title="View Product"
-              onPress={() => navigation.navigate('ItemDesc', { productId: recommendedItem.id })}
-            />
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
+
     </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    paddingTop: 30,
     flex: 1,
   },
   header: {
@@ -148,6 +154,9 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'contain',
     marginBottom: 5,
+  },
+  navstyle: {
+    paddingTop: 40,
   },
 });
 

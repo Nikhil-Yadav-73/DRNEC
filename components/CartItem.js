@@ -1,8 +1,60 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Button } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AuthContext from '../context/AuthContext';
 
-const CartItem = ({ item, updateQuantity, removeItem, navigation }) => {
+const CartItem = ({ item, navigation, setCartItems }) => {
+  const { user, authTokens, logoutUser } = useContext(AuthContext);
+
+  const updateQuantity = async (id, increment) => {
+    try {
+      let response = await fetch(
+        `http://192.168.1.8:8000/api/update_cartitem_quantity/${id}/${increment}/${user.user_id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authTokens.access}`,
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        setCartItems(data); // Update cart items in parent
+      } else if (response.status === 401) {
+        logoutUser();
+      } else {
+        Alert.alert('Error', 'Failed to update item quantity.');
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      Alert.alert('Error', 'Something went wrong.');
+    }
+  };
+
+  const removeItem = async (id) => {
+    try {
+      let response = await fetch(`http://192.168.1.8:8000/api/items/delete_cart_item/${user.user_id}/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authTokens.access}`,
+        },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setCartItems(data); // Update cart items in parent
+      } else if (response.status === 401) {
+        logoutUser();
+      } else {
+        Alert.alert('Error', 'Failed to remove item.');
+      }
+    } catch (error) {
+      console.error('Error removing item:', error);
+      Alert.alert('Error', 'Something went wrong.');
+    }
+  };
+
   return (
     <View style={styles.cartItem}>
       <TouchableOpacity onPress={() => navigation.navigate('ItemDesc', { productId: item.id })}>

@@ -118,7 +118,7 @@ const MyNavbar = () => {
   return (
     <View>
       <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomePage")}>
           <Text style={styles.brand}>ShopNik</Text>
         </TouchableOpacity>
         <View style={styles.iconGroup}>
@@ -137,7 +137,7 @@ const MyNavbar = () => {
         </View>
       </View>
 
-      <View style={styles.searchBar}>
+      {/* <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
           placeholder="Search"
@@ -162,14 +162,14 @@ const MyNavbar = () => {
             contentContainerStyle={styles.resultsList}
           />
         </View>
-      )}
+      )} */}
 
 
-      {searchItems.length > 0 && (
+      {/* {searchItems.length > 0 && (
         <TouchableOpacity onPress={clearSearchResults} style={styles.closeButton}>
           <Ionicons name="close-circle-outline" size={24} color="#000" />
         </TouchableOpacity>
-      )}
+      )} */}
     </View>
   );
 };
