@@ -113,11 +113,11 @@ const Cart = () => {
         </View>
         <View style={styles.summaryRow}>
           <Text>Total Cart Value: </Text>
-          <Text>${totalCartValue.toFixed(2)}</Text>
+          <Text>₹ {totalCartValue.toFixed(2)}</Text>
         </View>
         <View style={styles.summaryRow}>
           <Text>Shipping Charges: </Text>
-          <Text>${shippingCharge}</Text>
+          <Text>₹ {shippingCharge}</Text>
         </View>
         <View style={styles.summaryRow}>
           <Text>Discount Code: </Text>
@@ -131,9 +131,19 @@ const Cart = () => {
         </View>
         <View style={styles.summaryRow}>
           <Text>Grand Total: </Text>
-          <Text>${grandTotal.toFixed(2)}</Text>
+          <Text>₹ {grandTotal.toFixed(2)}</Text>
         </View>
-        <Button title="Checkout" onPress={() => navigation.navigate('Checkout')} />
+        <Button
+          title="Checkout"
+          onPress={() =>
+            navigation.navigate('Checkout', {
+              totalCartValue,
+              shippingCharge,
+              grandTotal,
+              totalItems,
+            })
+          }
+        />
       </View>
     </View>
   );
