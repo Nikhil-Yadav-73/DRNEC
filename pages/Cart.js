@@ -4,11 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import CartItem from '../components/CartItem';
 import MyNavbar from "../components/MyNavbar";
+import Loading from "../components/Loading";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [discountCode, setDiscountCode] = useState('');
   const [shippingCharge] = useState(50);
+  const [loading, setLoading] = useState(true); // Loading state
   const { user, authTokens, logoutUser } = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -17,53 +19,24 @@ const Cart = () => {
   }, []);
 
   const getCartItems = async () => {
-    let response = await fetch(`http://192.168.1.8:8000/api/cart/${user.user_id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authTokens.access}`,
-      },
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      setCartItems(data);
-    } else if (response.status === 401) {
-      logoutUser();
-    }
-  };
-
-  const updateQuantity = async (id, increment) => {
-    let response = await fetch(
-      `http://192.168.1.8:8000/api/update_cartitem_quantity/${id}/${increment}/${user.user_id}`,
-      {
-        method: 'POST',
+    try {
+      let response = await fetch(`http://192.168.1.8:8000/api/cart/${user.user_id}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authTokens.access}`,
+          Authorization: `Bearer ${authTokens.access}`,
         },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setCartItems(data);
+      } else if (response.status === 401) {
+        logoutUser();
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      setCartItems(data);
-    } else if (response.status === 401) {
-      logoutUser();
-    }
-  };
-
-  const removeItem = async (id) => {
-    let response = await fetch(`http://192.168.1.8:8000/api/items/delete_cart_item/${user.user_id}/${id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authTokens.access}`,
-      },
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      setCartItems(data);
-    } else if (response.status === 401) {
-      logoutUser();
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    } finally {
+      setLoading(false); // Stop loading once the request is completed
     }
   };
 
@@ -87,9 +60,13 @@ const Cart = () => {
     }
   };
 
+  if (loading) {
+    return <Loading />; // Show Loading component while fetching data
+  }
+
   return (
     <View style={styles.container}>
-    <MyNavbar />
+      <MyNavbar />
       <Text style={styles.header}>{user.username}'s Shopping Cart</Text>
 
       {cartItems.length === 0 ? (
@@ -108,49 +85,48 @@ const Cart = () => {
         ))
       )}
 
-      {cartItems.length === 0 ? (
-        <Text></Text>
-      ) : (
-      <View style={styles.summaryContainer}>
-        <Text style={styles.summaryTitle}>Cart Summary</Text>
-        <View style={styles.summaryRow}>
-          <Text>Total Items: </Text>
-          <Text>{totalItems}</Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text>Total Cart Value: </Text>
-          <Text>₹ {totalCartValue.toFixed(2)}</Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text>Shipping Charges: </Text>
-          <Text>₹ {shippingCharge}</Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text>Discount Code: </Text>
-          <TextInput
-            style={styles.input}
-            value={discountCode}
-            onChangeText={(text) => setDiscountCode(text)}
-            placeholder="Enter discount code"
+      {cartItems.length > 0 && (
+        <View style={styles.summaryContainer}>
+          <Text style={styles.summaryTitle}>Cart Summary</Text>
+          <View style={styles.summaryRow}>
+            <Text>Total Items: </Text>
+            <Text>{totalItems}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Total Cart Value: </Text>
+            <Text>₹ {totalCartValue.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Shipping Charges: </Text>
+            <Text>₹ {shippingCharge}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Discount Code: </Text>
+            <TextInput
+              style={styles.input}
+              value={discountCode}
+              onChangeText={(text) => setDiscountCode(text)}
+              placeholder="Enter discount code"
+            />
+            <Button title="Apply" onPress={applyDiscount} />
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Grand Total: </Text>
+            <Text>₹ {grandTotal.toFixed(2)}</Text>
+          </View>
+          <Button
+            title="Checkout"
+            onPress={() =>
+              navigation.navigate('Checkout', {
+                totalCartValue,
+                shippingCharge,
+                grandTotal,
+                totalItems,
+              })
+            }
           />
-          <Button title="Apply" onPress={applyDiscount} />
         </View>
-        <View style={styles.summaryRow}>
-          <Text>Grand Total: </Text>
-          <Text>₹ {grandTotal.toFixed(2)}</Text>
-        </View>
-        <Button
-          title="Checkout"
-          onPress={() =>
-            navigation.navigate('Checkout', {
-              totalCartValue,
-              shippingCharge,
-              grandTotal,
-              totalItems,
-            })
-          }
-        />
-      </View>)}
+      )}
     </View>
   );
 };
