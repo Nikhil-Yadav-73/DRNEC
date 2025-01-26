@@ -9,6 +9,7 @@ import ProductCard from "../components/ProductCard";
 import SearchBarComp from "../components/SearchBarComp";
 import Gender from "../components/Gender";
 import { useNavigation } from "@react-navigation/native";
+import CarouselComp from "../components/CarouselComp";
 
 const HomePage = ({ route }) => {
   const [categories, setCategories] = useState([]);
@@ -109,27 +110,7 @@ const HomePage = ({ route }) => {
       <MyNavbar />
       <SearchBarComp />
 
-      <View style={styles.carouselContainer}>
-        <TouchableOpacity onPress={prevSlide} style={styles.carouselButton}>
-          <Text style={styles.carouselButtonText}>&#8249;</Text>
-        </TouchableOpacity>
-        <FlatList
-          horizontal
-          data={categories.slice(currentIndex, currentIndex + itemsPerPage)}
-          renderItem={({ item }) => (
-            <View style={styles.carouselItem}>
-              <CategoryCard key={item.id} id={item.id} category={item.name} />
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.carousel}
-          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
-        />
-        <TouchableOpacity onPress={nextSlide} style={styles.carouselButton}>
-          <Text style={styles.carouselButtonText}>&#8250;</Text>
-        </TouchableOpacity>
-      </View>
+      <CarouselComp categories={categories}/>
 
       <Gender navigation={navigation} />
 
@@ -174,9 +155,6 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: "bold",
     color: "#fff",
-  },
-  carouselItem: {
-    marginHorizontal: 5,
   },
   itemSeparator: {
     width: 10,
