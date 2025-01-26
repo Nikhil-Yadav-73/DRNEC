@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TouchableOpacity, ScrollView, View, Text, Image, Button, Picker, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { TouchableOpacity, ScrollView, View, Text, Image, Button, Picker, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import axios from 'axios'; 
 import MyNavbar from '../components/MyNavbar';
+import TempMsg from '../components/TempMsg'; // Import the TempMsg component
 
 const ItemDesc = ({ route }) => {
-    const { productId } = route.params;
-  const { user} = useContext(AuthContext);
+  const { productId } = route.params;
+  const { user } = useContext(AuthContext);
   const [item, setItem] = useState(null);
   const [recommendedItems, setRecommendedItems] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -43,9 +45,12 @@ const ItemDesc = ({ route }) => {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      const data = await response.json();
-      // console.log('Item added to cart:', data);
-      Alert.alert('Item added to cart');
+      if (response.ok) {
+        setShowMessage(true); // Show the TempMsg component
+        setTimeout(() => setShowMessage(false), 2000); // Hide the message after 2 seconds
+      } else {
+        console.error('Failed to add item to cart');
+      }
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
@@ -56,52 +61,56 @@ const ItemDesc = ({ route }) => {
   }
 
   return (
-    <ScrollView style={styles.navstyle}>
-      <MyNavbar  />
-      <View style={styles.container}>
-        <Image source={{ uri: item.image }} style={styles.image} />
-        <Text style={styles.header}>{item.name}</Text>
-        <Text style={styles.text}>{item.description}</Text>
-        <Text style={[styles.text, styles.price]}>Price: ₹ {item.price}</Text>
-        <Text style={[styles.text, styles.boldText]}>Material: {item.material}</Text>
-        <Text style={[styles.text, styles.boldText]}>Category: {item.category.name}</Text>
+    <View style={{ flex: 1 }}>
+      {/* Render TempMsg when showMessage is true */}
+      {showMessage && <TempMsg message="Item added to cart!" duration={2000} />}
 
+      <ScrollView style={styles.navstyle}>
+        <MyNavbar />
+        <View style={styles.container}>
+          <Image source={{ uri: item.image }} style={styles.image} />
+          <Text style={styles.header}>{item.name}</Text>
+          <Text style={styles.text}>{item.description}</Text>
+          <Text style={[styles.text, styles.price]}>Price: ₹ {item.price}</Text>
+          <Text style={[styles.text, styles.boldText]}>Material: {item.material}</Text>
+          <Text style={[styles.text, styles.boldText]}>Category: {item.category.name}</Text>
 
-      {item.category.name === 'kurti' && (
-        <View style={styles.sizeSelectContainer}>
-          <Text style={styles.text}>Select Size:</Text>
-          <Picker
-            selectedValue={selectedSize}
-            style={styles.picker}
-            onValueChange={(itemValue) => setSelectedSize(itemValue)}>
-            <Picker.Item label="Select size" value="" />
-            <Picker.Item label="Small" value="small" />
-            <Picker.Item label="Medium" value="medium" />
-            <Picker.Item label="Large" value="large" />
-            <Picker.Item label="X-Large" value="xlarge" />
-            <Picker.Item label="XX-Large" value="xxlarge" />
-          </Picker>
+          {item.category.name === 'kurti' && (
+            <View style={styles.sizeSelectContainer}>
+              <Text style={styles.text}>Select Size:</Text>
+              <Picker
+                selectedValue={selectedSize}
+                style={styles.picker}
+                onValueChange={(itemValue) => setSelectedSize(itemValue)}
+              >
+                <Picker.Item label="Select size" value="" />
+                <Picker.Item label="Small" value="small" />
+                <Picker.Item label="Medium" value="medium" />
+                <Picker.Item label="Large" value="large" />
+                <Picker.Item label="X-Large" value="xlarge" />
+                <Picker.Item label="XX-Large" value="xxlarge" />
+              </Picker>
+            </View>
+          )}
+
+          <Button title="Add to Cart" onPress={handleAddToCart} />
+
+          <Text style={styles.recommendedTitle}>Recommended Products</Text>
+          <View style={styles.recommendedItemsContainer}>
+            {recommendedItems.map((recommendedItem) => (
+              <TouchableOpacity
+                key={recommendedItem.id}
+                style={styles.recommendedItemCard}
+                onPress={() => navigation.navigate('ItemDesc', { productId: recommendedItem.id })}
+              >
+                <Image source={{ uri: recommendedItem.image }} style={styles.recommendedImage} />
+                <Text>{recommendedItem.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      )}
-
-      <Button title="Add to Cart" onPress={handleAddToCart} />
-
-      <Text style={styles.recommendedTitle}>Recommended Products</Text>
-      <View style={styles.recommendedItemsContainer}>
-        {recommendedItems.map((recommendedItem) => (
-          <TouchableOpacity
-            key={recommendedItem.id}
-            style={styles.recommendedItemCard}
-            onPress={() => navigation.navigate('ItemDesc', { productId: recommendedItem.id })}
-          >
-            <Image source={{ uri: recommendedItem.image }} style={styles.recommendedImage} />
-            <Text>{recommendedItem.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
+      </ScrollView>
     </View>
-    </ScrollView>
   );
 };
 
@@ -155,7 +164,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   price: {
-    color: 'green'
+    color: 'green',
   },
 });
 
