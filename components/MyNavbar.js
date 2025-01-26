@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import AuthContext from "../context/AuthContext";
-import SearchBar from "./SearchBar"; // Import the SearchBar component
+import SearchBar from "./SearchBar";
 
 const MyNavbar = () => {
   const { user } = useContext(AuthContext);
@@ -31,7 +31,6 @@ const MyNavbar = () => {
         </View>
       </View>
 
-      {/* Include SearchBar component */}
       <SearchBar />
     </View>
   );

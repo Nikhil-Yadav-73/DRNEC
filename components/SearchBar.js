@@ -59,7 +59,6 @@ const SearchBar = () => {
 
   return (
     <View>
-      {/* Search Input and Button */}
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
@@ -73,7 +72,6 @@ const SearchBar = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Search Results */}
       {searchItems.length > 0 && (
         <View style={styles.resultsContainer}>
           <Text style={styles.resultsHeader}>

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import AuthContext from "../context/AuthContext"; // Your AuthContext
+import AuthContext from "../context/AuthContext";
 
-const LoginPage = ({ navigation }) => { // Get navigation prop here
+const LoginPage = ({ navigation }) => {
   const { loginUser } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
@@ -13,7 +13,6 @@ const LoginPage = ({ navigation }) => { // Get navigation prop here
       Alert.alert("Error", "Both fields are required.");
       return;
     }
-    // Pass navigation along with username and password
     loginUser(username, password, navigation);
   };
 

@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
             if (authTokens) {
                 updateToken();
             }
-        }, 240000); // 4 minutes
+        }, 240000);
         return () => clearInterval(interval);
     }, [authTokens, loading]);
 
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const ContextData = {
-        loginUser, // Now expects navigation as an argument
+        loginUser,
         logoutUser,
         authTokens,
         user,
