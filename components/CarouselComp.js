@@ -5,7 +5,7 @@ import CategoryCard from "./CategoryCard";
 
 const CarouselComp = ({ categories }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const navigation = useNavigation();
 
   const nextSlide = () => {
