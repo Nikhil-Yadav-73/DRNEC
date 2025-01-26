@@ -59,10 +59,10 @@ const ItemDesc = ({ route }) => {
     <ScrollView style={styles.navstyle}>
       <MyNavbar  />
       <View style={styles.container}>
-        <Text style={styles.header}>{item.name}</Text>
         <Image source={{ uri: item.image }} style={styles.image} />
+        <Text style={styles.header}>{item.name}</Text>
         <Text style={styles.text}>{item.description}</Text>
-        <Text style={[styles.text, styles.boldText]}>Price: ₹ {item.price}</Text>
+        <Text style={[styles.text, styles.price]}>Price: ₹ {item.price}</Text>
         <Text style={[styles.text, styles.boldText]}>Material: {item.material}</Text>
         <Text style={[styles.text, styles.boldText]}>Category: {item.category.name}</Text>
 
@@ -111,9 +111,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   image: {
     width: '100%',
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 5,
   },
-  navstyle: {
-    
+  price: {
+    color: 'green'
   },
 });
 

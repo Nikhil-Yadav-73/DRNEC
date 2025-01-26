@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   brand: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#000",
+    color: "navy",
   },
   iconGroup: {
     flexDirection: "row",
