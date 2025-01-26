@@ -56,6 +56,8 @@ const HomePage = ({route}) => {
       
       {/* <Gender navigation={navigation}/> */}
 
+      <Text style={styles.header}>items for {gender}</Text>
+
       <View style={styles.productGrid}>
         {items.map((homeItem) => (
           <ProductCard
@@ -71,7 +73,9 @@ const HomePage = ({route}) => {
           />
         ))}
       </View>
-      <Text>Unisex Items</Text>
+      
+      <Text style={styles.header}>Unisex items</Text>
+
       <View style={styles.productGrid}>
         {unisexItems.map((homeItem) => (
           <ProductCard
@@ -98,6 +102,13 @@ export default HomePage;
 const styles = StyleSheet.create({
   carouselItem: {
     marginHorizontal: 5,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    paddingTop: 16,
+    textAlign: 'center',
   },
   itemSeparator: {
     width: 10,
