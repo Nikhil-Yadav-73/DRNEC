@@ -18,7 +18,7 @@ const Gender = ({ navigation }) => {
         <View style={styles.categoryRow}>
           <TouchableOpacity
             style={styles.categoryCard}
-            onPress={() => navigation.navigate('GenderProducts', { gender: 'men' })}
+            onPress={() => navigation.navigate('GenderProducts', { gender: "men" })}
           >
             <Text style={styles.categoryText}>Men's</Text>
           </TouchableOpacity>

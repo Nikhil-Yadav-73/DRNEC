@@ -7,10 +7,13 @@ import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import { SearchBar } from "react-native-screens";
 import Gender from "../components/Gender";
+import { useNavigation } from '@react-navigation/native';
 
-const HomePage = ({navigation, gender}) => {
+const HomePage = ({route}) => {
   const [items, setItems] = useState([]);
   const { authTokens, logoutUser } = useContext(AuthContext);
+  const {gender} = route.params;
+  const navigation = useNavigation();
 
   useEffect(() => {
     getItems();
@@ -24,32 +27,32 @@ const HomePage = ({navigation, gender}) => {
       }
     };
 
-  const getItems = async () => {
-    try {
-      const response = await fetch(`http://192.168.1.8:8000/api/gender/${gender}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authTokens.access}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setItems(Array.isArray(data.results) ? data.results : []);
-      } else {
-        handleFetchError(response);
+    const getItems = async () => {
+      try {
+        const response = await fetch(`http://192.168.1.8:8000/api/gender/${gender}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authTokens.access}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setItems(Array.isArray(data) ? data : []);
+        } else {
+          handleFetchError(response);
+        }
+      } catch (error) {
+        console.error("Error fetching home items:", error);
       }
-    } catch (error) {
-      console.error("Error fetching home items:", error);
-    }
-  };
-
+    };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
       
-      <Gender navigation={navigation}/>
+      {/* <Gender navigation={navigation}/> */}
 
       <View style={styles.productGrid}>
         {items.map((homeItem) => (
