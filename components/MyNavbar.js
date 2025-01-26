@@ -12,7 +12,7 @@ const MyNavbar = () => {
   return (
     <View>
       <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.navigate("HomePage")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomePage", {firstTimeToggle : false})}>
           <Text style={styles.brand}>ShopNik</Text>
         </TouchableOpacity>
         <View style={styles.iconGroup}>

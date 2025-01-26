@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, FlatList, Image, TouchableOpacity, Alert, StyleSheet, ScrollView } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet, ScrollView, Animated } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import AuthContext from "../context/AuthContext";
 import MyNavbar from "../components/MyNavbar";
 import MyFooter from "../components/MyFooter";
@@ -7,15 +8,28 @@ import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import SearchBarComp from "../components/SearchBarComp";
 import Gender from "../components/Gender";
+import { useNavigation } from "@react-navigation/native";
 
-const HomePage = ({navigation}) => {
+const HomePage = ({ route }) => {
   const [categories, setCategories] = useState([]);
   const [homeItems, setHomeItems] = useState([]);
+  const [showAnimation, setShowAnimation] = useState(route.params.firstTimeToggle);
   const { authTokens, logoutUser } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 5;
+  const navigation = useNavigation();
+  const fadeAnim = new Animated.Value(1);
 
   useEffect(() => {
+    if (showAnimation) {
+      setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+        }).start(() => setShowAnimation(false));
+      }, 3000);
+    }
     getCategories();
     getHomeItems();
   }, []);
@@ -80,11 +94,21 @@ const HomePage = ({navigation}) => {
     }
   };
 
+  if (showAnimation) {
+    return (
+      <Animated.View style={{ ...styles.overlay, opacity: fadeAnim }}>
+        <LinearGradient colors={["blue", "pink"]} style={styles.gradient}>
+          <Text style={styles.animationText}>ShopNik</Text>
+        </LinearGradient>
+      </Animated.View>
+    );
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
       <SearchBarComp />
-      
+
       <View style={styles.carouselContainer}>
         <TouchableOpacity onPress={prevSlide} style={styles.carouselButton}>
           <Text style={styles.carouselButtonText}>&#8249;</Text>
@@ -107,7 +131,7 @@ const HomePage = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <Gender navigation={navigation}/>
+      <Gender navigation={navigation} />
 
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
@@ -133,6 +157,24 @@ const HomePage = ({navigation}) => {
 export default HomePage;
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 10,
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  animationText: {
+    fontSize: 48,
+    fontWeight: "bold",
+    color: "#fff",
+  },
   carouselItem: {
     marginHorizontal: 5,
   },
@@ -148,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 16,
-    paddingTop:10,
+    paddingTop: 10,
   },
   carousel: {
     paddingHorizontal: 8,
@@ -165,9 +207,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 8,
-  },
-  searchcomponent: {
-    paddingTop: 2,
-    paddingBottom: 2,
   },
 });

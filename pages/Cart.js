@@ -10,7 +10,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [discountCode, setDiscountCode] = useState('');
   const [shippingCharge] = useState(50);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const { user, authTokens, logoutUser } = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -36,7 +36,7 @@ const Cart = () => {
     } catch (error) {
       console.error('Error fetching cart items:', error);
     } finally {
-      setLoading(false); // Stop loading once the request is completed
+      setLoading(false);
     }
   };
 
@@ -61,7 +61,7 @@ const Cart = () => {
   };
 
   if (loading) {
-    return <Loading />; // Show Loading component while fetching data
+    return <Loading />;
   }
 
   return (

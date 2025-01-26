@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
                 setAuthTokens(data);
                 setUser(decodedUser);
                 await AsyncStorage.setItem('authTokens', JSON.stringify(data));
-                navigation.navigate("HomePage");
+                navigation.navigate("HomePage", {firstTimeToggle : true});
             } else {
                 const errorData = await response.json();
                 console.log("Response status:", response.status);

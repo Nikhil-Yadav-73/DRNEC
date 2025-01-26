@@ -33,7 +33,7 @@ const SignupPage = () => {
         const decodedUser = jwtDecode(data.access);
         await AsyncStorage.setItem("authTokens", JSON.stringify(data));
         // console.log("Login successful, user:", decodedUser);
-        navigation.navigate("HomePage");
+        navigation.navigate("HomePage", {firstTimeToggle : true});
       } else {
         const errorData = await response.json();
         Alert.alert("Login Failed", errorData.detail || "Invalid credentials");
