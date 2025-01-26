@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import axios from 'axios'; 
 import MyNavbar from '../components/MyNavbar';
-import TempMsg from '../components/TempMsg'; // Import the TempMsg component
+import TempMsg from '../components/TempMsg';
 
 const ItemDesc = ({ route }) => {
   const { productId } = route.params;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import CartItem from '../components/CartItem';
@@ -60,73 +60,75 @@ const Cart = () => {
     }
   };
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
       <MyNavbar />
       <Text style={styles.header}>{user.username}'s Shopping Cart</Text>
 
-      {cartItems.length === 0 ? (
-        <View style={styles.emptycart}>
-          <Text style={styles.emptycartText}>Your cart is empty !</Text>
-        </View>
-      ) : (
-        cartItems.map((cartItem) => (
-          <CartItem
-            key={cartItem.id}
-            item={cartItem}
-            quantity={cartItem.quantity}
-            setCartItems={setCartItems}
-            navigation={navigation}
-          />
-        ))
-      )}
-
-      {cartItems.length > 0 && (
-        <View style={styles.summaryContainer}>
-          <Text style={styles.summaryTitle}>Cart Summary</Text>
-          <View style={styles.summaryRow}>
-            <Text>Total Items: </Text>
-            <Text>{totalItems}</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {cartItems.length === 0 ? (
+          <View style={styles.emptycart}>
+            <Text style={styles.emptycartText}>Your cart is empty!</Text>
           </View>
-          <View style={styles.summaryRow}>
-            <Text>Total Cart Value: </Text>
-            <Text>₹ {totalCartValue.toFixed(2)}</Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text>Shipping Charges: </Text>
-            <Text>₹ {shippingCharge}</Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text>Discount Code: </Text>
-            <TextInput
-              style={styles.input}
-              value={discountCode}
-              onChangeText={(text) => setDiscountCode(text)}
-              placeholder="Enter discount code"
+        ) : (
+          cartItems.map((cartItem) => (
+            <CartItem
+              key={cartItem.id}
+              item={cartItem}
+              quantity={cartItem.quantity}
+              setCartItems={setCartItems}
+              navigation={navigation}
             />
-            <Button title="Apply" onPress={applyDiscount} />
+          ))
+        )}
+
+        {cartItems.length > 0 && (
+          <View style={styles.summaryContainer}>
+            <Text style={styles.summaryTitle}>Cart Summary</Text>
+            <View style={styles.summaryRow}>
+              <Text>Total Items: </Text>
+              <Text>{totalItems}</Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text>Total Cart Value: </Text>
+              <Text>₹ {totalCartValue.toFixed(2)}</Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text>Shipping Charges: </Text>
+              <Text>₹ {shippingCharge}</Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text>Discount Code: </Text>
+              <TextInput
+                style={styles.input}
+                value={discountCode}
+                onChangeText={(text) => setDiscountCode(text)}
+                placeholder="Enter discount code"
+              />
+              <Button title="Apply" onPress={applyDiscount} />
+            </View>
+            <View style={styles.summaryRow}>
+              <Text>Grand Total: </Text>
+              <Text>₹ {grandTotal.toFixed(2)}</Text>
+            </View>
+            <Button
+              title="Checkout"
+              onPress={() =>
+                navigation.navigate('Checkout', {
+                  totalCartValue,
+                  shippingCharge,
+                  grandTotal,
+                  totalItems,
+                })
+              }
+            />
           </View>
-          <View style={styles.summaryRow}>
-            <Text>Grand Total: </Text>
-            <Text>₹ {grandTotal.toFixed(2)}</Text>
-          </View>
-          <Button
-            title="Checkout"
-            onPress={() =>
-              navigation.navigate('Checkout', {
-                totalCartValue,
-                shippingCharge,
-                grandTotal,
-                totalItems,
-              })
-            }
-          />
-        </View>
-      )}
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -146,6 +148,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  scrollContainer: {
+    paddingBottom: 16,
   },
   header: {
     fontSize: 24,
