@@ -96,10 +96,9 @@ const Cart = () => {
         cartItems.map((cartItem) => (
           <CartItem
             key={cartItem.id}
-            item={cartItem.item}
+            item={cartItem}
             quantity={cartItem.quantity}
-            updateQuantity={updateQuantity}
-            removeItem={removeItem}
+            setCartItems={setCartItems}
             navigation={navigation}
           />
         ))

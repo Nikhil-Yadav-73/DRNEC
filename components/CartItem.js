@@ -20,7 +20,7 @@ const CartItem = ({ item, navigation, setCartItems }) => {
       );
       let data = await response.json();
       if (response.status === 200) {
-        setCartItems(data); // Update cart items in parent
+        setCartItems(data);
       } else if (response.status === 401) {
         logoutUser();
       } else {
@@ -43,7 +43,7 @@ const CartItem = ({ item, navigation, setCartItems }) => {
       });
       let data = await response.json();
       if (response.status === 200) {
-        setCartItems(data); // Update cart items in parent
+        setCartItems(data);
       } else if (response.status === 401) {
         logoutUser();
       } else {
@@ -57,22 +57,22 @@ const CartItem = ({ item, navigation, setCartItems }) => {
 
   return (
     <View style={styles.cartItem}>
-      <TouchableOpacity onPress={() => navigation.navigate('ItemDesc', { productId: item.id })}>
-        <Image source={{ uri: item.image }} style={styles.itemImage} />
+      <TouchableOpacity onPress={() => navigation.navigate('ItemDesc', { productId: item.item.id })}>
+        <Image source={{ uri: item.item.image }} style={styles.itemImage} />
       </TouchableOpacity>
       <View style={styles.itemDetails}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>${item.price * item.quantity}</Text>
+        <Text style={styles.itemName}>{item.item.name}</Text>
+        <Text style={styles.itemPrice}>${item.item.price * item.quantity}</Text>
         <View style={styles.quantityContainer}>
-          <Button title="-" onPress={() => updateQuantity(item.id, -1)} />
+          <Button title="-" onPress={() => updateQuantity(item.item.id, -1)} />
           <TextInput
             style={styles.quantityInput}
             value={item.quantity.toString()}
             editable={false}
           />
-          <Button title="+" onPress={() => updateQuantity(item.id, 1)} />
+          <Button title="+" onPress={() => updateQuantity(item.item.id, 1)} />
         </View>
-        <TouchableOpacity onPress={() => removeItem(item.id)} style={styles.removeButton}>
+        <TouchableOpacity onPress={() => removeItem(item.item.id)} style={styles.removeButton}>
           <Ionicons name="trash-outline" size={20} color="red" />
           <Text style={styles.removeText}>Remove</Text>
         </TouchableOpacity>
