@@ -60,7 +60,7 @@ const CartItem = ({ item, navigation, setCartItems }) => {
       <TouchableOpacity onPress={() => navigation.navigate('ItemDesc', { productId: item.item.id })}>
         <Image source={{ uri: item.item.image }} style={styles.itemImage} />
       </TouchableOpacity>
-      <View style={styles.itemDetails}>
+      <View style={styles.middleSection}>
         <Text style={styles.itemName}>{item.item.name}</Text>
         <Text style={styles.itemPrice}>${item.item.price * item.quantity}</Text>
         <View style={styles.quantityContainer}>
@@ -72,11 +72,11 @@ const CartItem = ({ item, navigation, setCartItems }) => {
           />
           <Button title="+" onPress={() => updateQuantity(item.item.id, 1)} />
         </View>
-        <TouchableOpacity onPress={() => removeItem(item.item.id)} style={styles.removeButton}>
-          <Ionicons name="trash-outline" size={20} color="red" />
-          <Text style={styles.removeText}>Remove</Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => removeItem(item.item.id)} style={styles.removeButton}>
+        <Ionicons name="trash-outline" size={30} color="red" />
+        {/* <Text style={styles.removeText}>Remove</Text> */}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   itemImage: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
+    width: 85,
+    height: 85,
+    marginRight: 45,
   },
-  itemDetails: {
+  middleSection: {
     flex: 1,
+    justifyContent: 'center',
   },
   itemName: {
     fontSize: 18,
@@ -119,12 +120,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   removeButton: {
-    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    padding: 10,
   },
   removeText: {
-    marginLeft: 5,
+    marginTop: 5,
     color: 'red',
     fontWeight: 'bold',
   },
