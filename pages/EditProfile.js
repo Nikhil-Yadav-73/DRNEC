@@ -68,19 +68,27 @@ const EditProfile = () => {
   };
 
   const handleImagePick = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: [ImagePicker.MediaType.Images],
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
   
-    if (!result.canceled) {
-      setProfile((prevState) => ({ ...prevState, pfp: result.assets[0].uri }));
+      if (!result.canceled) {
+        const selectedImage = result.uri || (result.assets && result.assets[0]?.uri);
+  
+        if (selectedImage) {
+          setProfile((prevState) => ({ ...prevState, pfp: selectedImage }));
+        }
+      }
+    } catch (error) {
+      console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to pick an image.');
     }
   };
   
-
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append(
