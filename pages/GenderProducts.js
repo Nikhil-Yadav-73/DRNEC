@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const HomePage = ({route}) => {
   const [items, setItems] = useState([]);
+  const [unisexItems, setUnisexItems] = useState([]);
   const { authTokens, logoutUser } = useContext(AuthContext);
   const {gender} = route.params;
   const navigation = useNavigation();
@@ -38,8 +39,9 @@ const HomePage = ({route}) => {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-          setItems(Array.isArray(data) ? data : []);
+          console.log("data: ", data)
+          setItems(Array.isArray(data.items) ? data.items : []);
+          setUnisexItems(Array.isArray(data.unisex_items) ? data.unisex_items : []);
         } else {
           handleFetchError(response);
         }
@@ -56,6 +58,22 @@ const HomePage = ({route}) => {
 
       <View style={styles.productGrid}>
         {items.map((homeItem) => (
+          <ProductCard
+            key={homeItem.id}
+            id={homeItem.id}
+            name={homeItem.name}
+            price={homeItem.price}
+            image={homeItem.image}
+            rating={homeItem.rating}
+            reviews={homeItem.reviews}
+            link1={homeItem.link1}
+            link2={homeItem.link2}
+          />
+        ))}
+      </View>
+      <Text>Unisex Items</Text>
+      <View style={styles.productGrid}>
+        {unisexItems.map((homeItem) => (
           <ProductCard
             key={homeItem.id}
             id={homeItem.id}
