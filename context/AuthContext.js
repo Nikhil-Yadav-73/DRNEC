@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (email, password, navigation) => {
         try {
-            console.log("Sending login request with:", email, password);
+            // console.log("Sending login request with:", email, password);
 
             const response = await fetch('http://192.168.1.8:8000/api/token/', {
                 method: 'POST',

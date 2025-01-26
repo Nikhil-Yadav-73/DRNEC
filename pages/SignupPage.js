@@ -32,7 +32,7 @@ const SignupPage = () => {
         const data = await response.json();
         const decodedUser = jwtDecode(data.access);
         await AsyncStorage.setItem("authTokens", JSON.stringify(data));
-        console.log("Login successful, user:", decodedUser);
+        // console.log("Login successful, user:", decodedUser);
         navigation.navigate("HomePage");
       } else {
         const errorData = await response.json();

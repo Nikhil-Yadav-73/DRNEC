@@ -39,7 +39,6 @@ const HomePage = ({route}) => {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log("data: ", data)
           setItems(Array.isArray(data.items) ? data.items : []);
           setUnisexItems(Array.isArray(data.unisex_items) ? data.unisex_items : []);
         } else {

@@ -44,7 +44,7 @@ const ItemDesc = ({ route }) => {
       });
 
       const data = await response.json();
-      console.log('Item added to cart:', data);
+      // console.log('Item added to cart:', data);
       Alert.alert('Item added to cart');
     } catch (error) {
       console.error('Error adding item to cart:', error);
