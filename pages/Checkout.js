@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import AuthContext from '../context/AuthContext';
 
 const Checkout = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { totalCartValue, shippingCharge, grandTotal, totalItems } = route.params;
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(true);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,6 +18,37 @@ const Checkout = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const sendOrderDetails = async () => {
+    const orderDetails = {
+      total_items: totalItems,
+      total_cart_value: totalCartValue,
+      shipping_charge: shippingCharge,
+      grand_total: grandTotal,
+      user_id: user.user_id,
+    };
+
+    try {
+      const response = await fetch('http://192.168.1.8:8000/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        Alert.alert('Success', 'Order details submitted successfully!');
+        navigation.navigate('HomePage');
+      } else {
+        Alert.alert('Error', 'Failed to submit order details.');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'An unexpected error occurred.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +60,6 @@ const Checkout = () => {
           <Text style={styles.successText}>Order Placed!</Text>
         </View>
       ) : (
-        
         <View style={styles.orderDetailsContainer}>
           <Text style={styles.header}>Order Summary</Text>
           <View style={styles.orderRow}>
@@ -47,9 +79,14 @@ const Checkout = () => {
             <Text style={styles.orderValue}>₹ {grandTotal.toFixed(2)}</Text>
           </View>
           <Button
+            title="Submit Order"
+            onPress={sendOrderDetails}
+            color="#007bff"
+          />
+          <Button
             title="Go to Home"
             onPress={() => navigation.navigate('HomePage')}
-            color="#007bff"
+            color="#28a745"
           />
         </View>
       )}

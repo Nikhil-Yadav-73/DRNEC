@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
-import CartItem from '../components/CartItem'; // Import the CartItem component
+import CartItem from '../components/CartItem';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
