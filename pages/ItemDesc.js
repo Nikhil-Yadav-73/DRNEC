@@ -46,8 +46,8 @@ const ItemDesc = ({ route }) => {
       });
 
       if (response.ok) {
-        setShowMessage(true); // Show the TempMsg component
-        setTimeout(() => setShowMessage(false), 2000); // Hide the message after 2 seconds
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 2000);
       } else {
         console.error('Failed to add item to cart');
       }
@@ -62,7 +62,6 @@ const ItemDesc = ({ route }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Render TempMsg when showMessage is true */}
       {showMessage && <TempMsg message="Item added to cart!" duration={2000} />}
 
       <ScrollView style={styles.navstyle}>

@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: "#fff",
-    paddingBottom: 16,
+    paddingBottom: 10,
   },
   carouselContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 16,
+    marginVertical: 5,
     paddingTop: 10,
   },
   carousel: {

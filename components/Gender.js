@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   categorySection: {
-    padding: 15,
-    paddingTop: 20,
+    paddingHorizontal: 10,
   },
   sectionTitle: {
     fontSize: 18,
@@ -79,31 +78,6 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  dropdownModal: {
-    justifyContent: 'flex-start',
-    margin: 0,
-    marginTop: 70,
-  },
-  dropdownMenu: {
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
-    elevation: 5,
-  },
-  dropdownItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  dropdownText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
