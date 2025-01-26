@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import CartItem from '../components/CartItem';
+import MyNavbar from "../components/MyNavbar";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -88,6 +89,7 @@ const Cart = () => {
 
   return (
     <View style={styles.container}>
+    <MyNavbar />
       <Text style={styles.header}>{user.username}'s Shopping Cart</Text>
 
       {cartItems.length === 0 ? (
@@ -167,17 +169,18 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   container: {
-    padding: 10,
     flex: 1,
-    paddingTop: 40,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    paddingTop: 10,
+    padding: 10,
   },
   summaryContainer: {
     marginTop: 20,
+    padding: 10,
   },
   summaryTitle: {
     fontSize: 20,
