@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet, ScrollView, Animated } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import AuthContext from "../context/AuthContext";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CategoryCard from "./CategoryCard";
 
