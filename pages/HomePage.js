@@ -107,7 +107,7 @@ const HomePage = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <Gender />
+      <Gender navigation={navigation}/>
 
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (

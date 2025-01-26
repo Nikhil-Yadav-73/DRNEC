@@ -58,6 +58,11 @@ const ProfilePage = () => {
     navigation.navigate('EditProfile');
   };
 
+  const handleLogout = () => {
+    logoutUser();
+    navigation.navigate('LoginPage');
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
@@ -76,6 +81,10 @@ const ProfilePage = () => {
 
           <TouchableOpacity onPress={to_edit_profile} style={styles.editButton}>
             <Text style={styles.editButtonText}>Edit Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -130,6 +139,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  logoutButton: {
+    marginTop: 10,
+    paddingVertical: 8,
+    backgroundColor: '#ff4d4d',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

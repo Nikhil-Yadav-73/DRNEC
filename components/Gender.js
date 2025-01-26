@@ -10,26 +10,21 @@ import {
 } from 'react-native';
 
 const Gender = ({ navigation }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-  let counter = 0;
 
   return (
     <View style={styles.container}>
-
       <ScrollView contentContainerStyle={styles.categorySection}>
 
         <View style={styles.categoryRow}>
           <TouchableOpacity
             style={styles.categoryCard}
-            // onPress={() => navigation.navigate('Category', { category: 'Mens' })}
+            onPress={() => navigation.navigate('GenderProducts', { gender: 'men' })}
           >
             <Text style={styles.categoryText}>Men's</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.categoryCard}
-            // onPress={() => navigation.navigate('Category', { category: 'Womens' })}
+            onPress={() => navigation.navigate('GenderProducts', { gender: 'women' })}
           >
             <Text style={styles.categoryText}>Women's</Text>
           </TouchableOpacity>
@@ -38,13 +33,13 @@ const Gender = ({ navigation }) => {
         <View style={styles.categoryRow}>
           <TouchableOpacity
             style={styles.categoryCard}
-            // onPress={() => navigation.navigate('Category', { category: 'Kids' })}
+            onPress={() => navigation.navigate('GenderProducts', { gender: 'boys' })}
           >
             <Text style={styles.categoryText}>Boys</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.categoryCard}
-            // onPress={() => navigation.navigate('Category', { category: 'Accessories' })}
+            onPress={() => navigation.navigate('GenderProducts', { gender: 'girls' })}
           >
             <Text style={styles.categoryText}>Girls</Text>
           </TouchableOpacity>

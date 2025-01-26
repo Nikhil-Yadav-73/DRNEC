@@ -11,6 +11,7 @@ import Category from "./pages/Category";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfile from "./pages/EditProfile";
 import Checkout from "./pages/Checkout";
+import GenderProducts from "./pages/GenderProducts";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ const AppNavigator = () => {
       <Stack.Screen name="Profile" component={ProfilePage} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen name="GenderProducts" component={GenderProducts} />
     </Stack.Navigator>
   );
 };
