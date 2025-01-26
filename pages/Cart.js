@@ -91,7 +91,9 @@ const Cart = () => {
       <Text style={styles.header}>{user.username}'s Shopping Cart</Text>
 
       {cartItems.length === 0 ? (
-        <Text>Your cart is empty</Text>
+        <View style={styles.emptycart}>
+          <Text style={styles.emptycartText}>Your cart is empty !</Text>
+        </View>
       ) : (
         cartItems.map((cartItem) => (
           <CartItem
@@ -104,6 +106,9 @@ const Cart = () => {
         ))
       )}
 
+      {cartItems.length === 0 ? (
+        <Text></Text>
+      ) : (
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryTitle}>Cart Summary</Text>
         <View style={styles.summaryRow}>
@@ -143,16 +148,28 @@ const Cart = () => {
             })
           }
         />
-      </View>
+      </View>)}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  emptycart: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#555',
+  },
+  emptycartText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#555',
+  },
   container: {
     padding: 10,
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 40,
   },
   header: {
     fontSize: 24,
