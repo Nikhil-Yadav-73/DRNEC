@@ -5,7 +5,7 @@ import MyNavbar from "../components/MyNavbar";
 import MyFooter from "../components/MyFooter";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-import { SearchBar } from "react-native-screens";
+import SearchBarComp from "../components/SearchBarComp";
 import Gender from "../components/Gender";
 
 const HomePage = ({navigation}) => {
@@ -83,7 +83,7 @@ const HomePage = ({navigation}) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
-      <SearchBar navigation={ navigation } />
+      <SearchBarComp />
       
       <View style={styles.carouselContainer}>
         <TouchableOpacity onPress={prevSlide} style={styles.carouselButton}>

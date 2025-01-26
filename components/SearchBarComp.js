@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import AuthContext from "../context/AuthContext";
 
-const SearchBar = () => {
+const SearchBarComp = ({ category }) => {
   const { authTokens, logoutUser } = useContext(AuthContext);
   const [query, setQuery] = useState("");
   const [searchItems, setSearchItems] = useState([]);
@@ -32,7 +32,17 @@ const SearchBar = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        setSearchItems(data.results);
+        if(category === undefined){
+          setSearchItems(data.results)
+        }else{
+          let item_array = []
+          for(let i=0; i<data.results.length; i++){
+            if(data.results[i].category.name === category){
+              item_array.push(data.results[i])
+            }
+          }
+          setSearchItems(item_array);
+        }
       } else {
         if (response.statusText === "Unauthorized") logoutUser();
         else Alert.alert("Error", "Something went wrong! Try logging in again.");
@@ -143,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchBar;
+export default SearchBarComp;

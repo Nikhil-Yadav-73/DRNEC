@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import MyNavbar from '../components/MyNavbar';
 import MyFooter from '../components/MyFooter';
+import SearchBarComp from '../components/SearchBarComp';
 
 const Category = ({ route }) => {
   const { name } = route.params;
@@ -40,6 +41,7 @@ const Category = ({ route }) => {
   return (
     <View style={styles.container}>
       <MyNavbar />
+      <SearchBarComp category={name} />
       <Text style={styles.header}>{name}</Text>
 
       <FlatList
