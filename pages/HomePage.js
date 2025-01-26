@@ -12,7 +12,7 @@ const HomePage = ({navigation}) => {
   const [homeItems, setHomeItems] = useState([]);
   const { authTokens, logoutUser } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     getCategories();
