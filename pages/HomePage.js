@@ -6,6 +6,7 @@ import MyFooter from "../components/MyFooter";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import { SearchBar } from "react-native-screens";
+import Gender from "../components/Gender";
 
 const HomePage = ({navigation}) => {
   const [categories, setCategories] = useState([]);
@@ -106,6 +107,7 @@ const HomePage = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
+      <Gender />
 
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
