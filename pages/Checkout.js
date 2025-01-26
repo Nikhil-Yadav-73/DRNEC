@@ -12,6 +12,7 @@ const Checkout = () => {
   const {user} = useContext(AuthContext);
 
   useEffect(() => {
+    sendOrderDetails();
     const timer = setTimeout(() => {
       setShowSuccessAnimation(false);
     }, 3000);
@@ -78,16 +79,16 @@ const Checkout = () => {
             <Text style={styles.orderLabel}>Grand Total:</Text>
             <Text style={styles.orderValue}>₹ {grandTotal.toFixed(2)}</Text>
           </View>
-          <Button
+          {/* <Button
             title="Submit Order"
             onPress={sendOrderDetails}
             color="#007bff"
-          />
-          <Button
+          /> */}
+          {/* <Button
             title="Go to Home"
             onPress={() => navigation.navigate('HomePage')}
             color="#28a745"
-          />
+          /> */}
         </View>
       )}
     </View>
