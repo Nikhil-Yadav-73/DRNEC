@@ -19,7 +19,6 @@ const Gender = ({ navigation }) => {
     <View style={styles.container}>
 
       <ScrollView contentContainerStyle={styles.categorySection}>
-        <Text style={styles.sectionTitle}>Shop by Category</Text>
 
         <View style={styles.categoryRow}>
           <TouchableOpacity
