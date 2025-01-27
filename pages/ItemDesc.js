@@ -62,7 +62,7 @@ const ItemDesc = ({ route }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {showMessage && <TempMsg message="Item added to cart!" duration={2000} />}
+      {showMessage && <TempMsg message="Item added to cart!" duration={2000} onClose={() => setShowMessage(false)}/>}
 
       <ScrollView style={styles.navstyle}>
         <MyNavbar />

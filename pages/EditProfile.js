@@ -18,8 +18,8 @@ import MyNavbar from '../components/MyNavbar';
 const EditProfile = () => {
   const navigation = useNavigation();
   const { user, authTokens, logoutUser } = useContext(AuthContext);
-  const [imageUpdated, setImageUpdated] = useState(false);  // Track if the image was updated
-  const [isLoading, setIsLoading] = useState(false);  // Track loading state
+  const [imageUpdated, setImageUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState({
     pfp: null,
     name: '',
@@ -84,14 +84,13 @@ const EditProfile = () => {
         const selectedImage = result.uri || (result.assets && result.assets[0]?.uri);
 
         if (selectedImage) {
-          // Compress the image before uploading
           const compressedImage = await ImageManipulator.manipulateAsync(
             selectedImage,
-            [{ resize: { width: 500 } }], // Resize image width to 500px
+            [{ resize: { width: 500 } }],
             { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
           );
           setProfile((prevState) => ({ ...prevState, pfp: compressedImage.uri }));
-          setImageUpdated(true);  // Mark the image as updated
+          setImageUpdated(true); 
         }
       }
     } catch (error) {
@@ -101,7 +100,7 @@ const EditProfile = () => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);  // Set loading to true when submitting
+    setIsLoading(true);
     const formData = new FormData();
     formData.append(
       'profile',
@@ -143,7 +142,7 @@ const EditProfile = () => {
       );
 
       if (response.status === 200) {
-        Alert.alert('Success', 'Profile updated successfully.');
+        // Alert.alert('Success', 'Profile updated successfully.');
         navigation.navigate('Profile', { updated: true });
       } else {
         Alert.alert('Error', 'Failed to update profile.');

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import MyFooter from '../components/MyFooter';
 import MyNavbar from '../components/MyNavbar';
 import Loading from '../components/Loading';
+import TempMsg from '../components/TempMsg';
 
 const ProfilePage = ({ route }) => {
   const { user, authTokens, logoutUser } = useContext(AuthContext);
@@ -14,6 +15,8 @@ const ProfilePage = ({ route }) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const { updated } = route.params || {};
+  const [showMessage, setShowMessage] = useState(false);
+  const [successToggle, setSuccessToggle] = useState(updated);
 
   const getUserProfile = async () => {
     try {
@@ -45,6 +48,11 @@ const ProfilePage = ({ route }) => {
     getUserProfile();
   }, [updated]);
 
+  if(updated === true && successToggle === true){
+    setShowMessage(true);
+    setSuccessToggle(false);
+  }
+
   useEffect(() => {
     if (userprofile && userdata) {
       setProfile({
@@ -75,7 +83,7 @@ const ProfilePage = ({ route }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
-
+      {showMessage && <TempMsg message="Profile updated !" duration={1200} onClose={() => setShowMessage(false)}/>}
       <View style={styles.profileCard}>
         <View style={styles.profileImageContainer}>
           <Image source={{ uri: profile.pfp }} style={styles.profileImage} />

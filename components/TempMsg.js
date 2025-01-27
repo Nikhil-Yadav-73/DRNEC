@@ -10,7 +10,7 @@ const TempMsg = ({ message, duration, onClose }) => {
         toValue: 0,
         duration: 500,
         useNativeDriver: true,
-      }).start(() => onClose && onClose());
+      }).start(() => onClose && onClose());  // Ensure interaction is restored when hidden
     }, duration);
 
     return () => clearTimeout(timeout);
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 50,
     alignItems: 'center',
-    zIndex: 1000,
+    zIndex: 999,
   },
   message: {
     color: '#fff',
