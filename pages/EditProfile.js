@@ -12,10 +12,14 @@ import {
 import AuthContext from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
+import MyNavbar from '../components/MyNavbar';
 
 const EditProfile = () => {
   const navigation = useNavigation();
   const { user, authTokens, logoutUser } = useContext(AuthContext);
+  const [imageUpdated, setImageUpdated] = useState(false);  // Track if the image was updated
+  const [isLoading, setIsLoading] = useState(false);  // Track loading state
   const [profile, setProfile] = useState({
     pfp: null,
     name: '',
@@ -29,7 +33,7 @@ const EditProfile = () => {
   useEffect(() => {
     const getUserProfile = async () => {
       try {
-        let response = await fetch(
+        const response = await fetch(
           `http://192.168.1.8:8000/api/userprofile/${user.user_id}`,
           {
             method: 'GET',
@@ -39,7 +43,7 @@ const EditProfile = () => {
             },
           }
         );
-        let data = await response.json();
+        const data = await response.json();
         if (response.status === 200) {
           setProfile({
             pfp: data.profile.pfp || null,
@@ -75,12 +79,19 @@ const EditProfile = () => {
         aspect: [1, 1],
         quality: 1,
       });
-  
+
       if (!result.canceled) {
         const selectedImage = result.uri || (result.assets && result.assets[0]?.uri);
-  
+
         if (selectedImage) {
-          setProfile((prevState) => ({ ...prevState, pfp: selectedImage }));
+          // Compress the image before uploading
+          const compressedImage = await ImageManipulator.manipulateAsync(
+            selectedImage,
+            [{ resize: { width: 500 } }], // Resize image width to 500px
+            { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+          );
+          setProfile((prevState) => ({ ...prevState, pfp: compressedImage.uri }));
+          setImageUpdated(true);  // Mark the image as updated
         }
       }
     } catch (error) {
@@ -88,8 +99,9 @@ const EditProfile = () => {
       Alert.alert('Error', 'Failed to pick an image.');
     }
   };
-  
+
   const handleSubmit = async () => {
+    setIsLoading(true);  // Set loading to true when submitting
     const formData = new FormData();
     formData.append(
       'profile',
@@ -108,7 +120,8 @@ const EditProfile = () => {
       })
     );
 
-    if (profile.pfp) {
+    // Only include the image if it has been updated
+    if (imageUpdated && profile.pfp) {
       const filename = profile.pfp.split('/').pop();
       const fileType = filename.split('.').pop();
       formData.append('pfp', {
@@ -119,7 +132,7 @@ const EditProfile = () => {
     }
 
     try {
-      let response = await fetch(
+      const response = await fetch(
         `http://192.168.1.8:8000/api/userprofile/${user.user_id}`,
         {
           method: 'PUT',
@@ -131,18 +144,22 @@ const EditProfile = () => {
       );
 
       if (response.status === 200) {
-        Alert.alert('Success', 'Profile updated successfully!');
+        Alert.alert('Success', 'Profile updated successfully.');
         navigation.navigate('Profile', { updated: true });
       } else {
         Alert.alert('Error', 'Failed to update profile.');
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+      Alert.alert('Error', 'Failed to update profile.');
+    } finally {
+      setIsLoading(false);  // Set loading to false after submission
     }
   };
 
   return (
     <View style={styles.container}>
+      <MyNavbar />
       <Text style={styles.header}>Edit Profile</Text>
       <TouchableOpacity onPress={handleImagePick} style={styles.imagePicker}>
         <Image
@@ -191,7 +208,11 @@ const EditProfile = () => {
         value={profile.country}
         onChangeText={(text) => handleChange('country', text)}
       />
-      <Button title="Save" onPress={handleSubmit} />
+      <Button
+        title={isLoading ? 'Saving...' : 'Save'}  // Show loading indicator text
+        onPress={handleSubmit}
+        disabled={isLoading}  // Disable button while loading
+      />
     </View>
   );
 };

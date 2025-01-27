@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import AuthContext from "../context/AuthContext";
 
-const SearchBarComp = ({ category }) => {
+const SearchBarComp = ({ category, gender }) => {
   const { authTokens, logoutUser } = useContext(AuthContext);
   const [query, setQuery] = useState("");
   const [searchItems, setSearchItems] = useState([]);

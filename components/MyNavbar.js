@@ -23,7 +23,7 @@ const MyNavbar = () => {
             <Ionicons name="cart-outline" size={24} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => navigation.navigate("Profile", {updated:false})}
             style={styles.icon}
           >
             <Ionicons name="person-outline" size={24} color="#000" />
