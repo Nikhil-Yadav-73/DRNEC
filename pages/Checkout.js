@@ -40,8 +40,8 @@ const Checkout = () => {
 
       if (response.ok) {
         const result = await response.json();
-        Alert.alert('Success', 'Order details submitted successfully!');
-        navigation.navigate("HomePage", {firstTimeToggle : false});
+        // Alert.alert('Success', 'Order details submitted successfully!');
+        navigation.navigate("HomePage", {firstTimeToggle : false, checkoutSuccess: true});
       } else {
         Alert.alert('Error', 'Failed to submit order details.');
       }

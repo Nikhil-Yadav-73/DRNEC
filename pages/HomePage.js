@@ -10,6 +10,7 @@ import SearchBarComp from "../components/SearchBarComp";
 import Gender from "../components/Gender";
 import { useNavigation } from "@react-navigation/native";
 import CarouselComp from "../components/CarouselComp";
+import TempMsg from "../components/TempMsg";
 
 const HomePage = ({ route }) => {
   const [categories, setCategories] = useState([]);
@@ -20,6 +21,8 @@ const HomePage = ({ route }) => {
   const itemsPerPage = 5;
   const navigation = useNavigation();
   const fadeAnim = new Animated.Value(1);
+  const {checkoutSuccess} = route.params;
+  const [showMessage, setShowMessage] = useState(checkoutSuccess);
 
   useEffect(() => {
     if (showAnimation) {
@@ -108,6 +111,7 @@ const HomePage = ({ route }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
+      {showMessage && <TempMsg message="Checkout Successful !" duration={2500} onClose={() => setShowMessage(false)}/>}
       <SearchBarComp />
 
       <CarouselComp categories={categories}/>

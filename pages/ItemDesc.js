@@ -47,7 +47,7 @@ const ItemDesc = ({ route }) => {
 
       if (response.ok) {
         setShowMessage(true);
-        setTimeout(() => setShowMessage(false), 2000);
+        setTimeout(() => setShowMessage(false), 1300);
       } else {
         console.error('Failed to add item to cart');
       }
