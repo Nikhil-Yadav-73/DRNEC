@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
   StyleSheet,
   Alert,
 } from "react-native";
@@ -32,17 +31,13 @@ const SearchBarComp = ({ category }) => {
       );
       const data = await response.json();
       if (response.ok) {
-        if(category === undefined){
-          setSearchItems(data.results)
-        }else{
-          let item_array = []
-          for(let i=0; i<data.results.length; i++){
-            if(data.results[i].category.name === category){
-              item_array.push(data.results[i])
-            }
-          }
-          setSearchItems(item_array);
+        let filteredItems = data.results;
+        if (category) {
+          filteredItems = filteredItems.filter(
+            (item) => item.category.name === category
+          );
         }
+        setSearchItems(filteredItems);
       } else {
         if (response.statusText === "Unauthorized") logoutUser();
         else Alert.alert("Error", "Something went wrong! Try logging in again.");
@@ -57,18 +52,9 @@ const SearchBarComp = ({ category }) => {
     setQuery("");
   };
 
-  const renderSearchItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("ItemDesc", { productId: item.id })}
-      style={styles.searchItem}
-    >
-      <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemPrice}>{item.price}</Text>
-    </TouchableOpacity>
-  );
-
   return (
     <View>
+      {/* Search Bar */}
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
@@ -77,6 +63,11 @@ const SearchBarComp = ({ category }) => {
           onChangeText={(text) => setQuery(text)}
           onSubmitEditing={handleSearch}
         />
+        {query ? (
+          <TouchableOpacity onPress={clearSearchResults} style={styles.clearButton}>
+            <Ionicons name="close-circle" size={20} color="#aaa" />
+          </TouchableOpacity>
+        ) : null}
         <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
           <Ionicons name="search-outline" size={20} color="#fff" />
         </TouchableOpacity>
@@ -87,15 +78,19 @@ const SearchBarComp = ({ category }) => {
           <Text style={styles.resultsHeader}>
             Search results for '{query}'
           </Text>
-          <FlatList
-            data={searchItems}
-            renderItem={renderSearchItem}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.resultsList}
-          />
-          <TouchableOpacity onPress={clearSearchResults} style={styles.closeButton}>
+          {searchItems.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => navigation.navigate("ItemDesc", { productId: item.id })}
+              style={styles.searchItem}
+            >
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemPrice}>{item.price}</Text>
+            </TouchableOpacity>
+          ))}
+          {/* <TouchableOpacity onPress={clearSearchResults} style={styles.closeButton}>
             <Ionicons name="close-circle-outline" size={24} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
     </View>
@@ -105,6 +100,7 @@ const SearchBarComp = ({ category }) => {
 const styles = StyleSheet.create({
   searchBar: {
     flexDirection: "row",
+    alignItems: "center",
     padding: 8,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
@@ -123,16 +119,23 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 4,
   },
+  clearButton: {
+    marginRight: 8,
+  },
   resultsContainer: {
-    padding: 16,
+    marginTop: 8,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 4,
+    // maxHeight: 200,
+    overflow: "hidden",
   },
   resultsHeader: {
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 10,
-  },
-  resultsList: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
   },
   searchItem: {
     padding: 16,
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
   closeButton: {
     alignItems: "center",
     marginTop: 10,
+    paddingBottom: 8,
   },
 });
 
