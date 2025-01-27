@@ -120,7 +120,6 @@ const EditProfile = () => {
       })
     );
 
-    // Only include the image if it has been updated
     if (imageUpdated && profile.pfp) {
       const filename = profile.pfp.split('/').pop();
       const fileType = filename.split('.').pop();
@@ -153,7 +152,7 @@ const EditProfile = () => {
       console.error('Error updating profile:', error);
       Alert.alert('Error', 'Failed to update profile.');
     } finally {
-      setIsLoading(false);  // Set loading to false after submission
+      setIsLoading(false);
     }
   };
 
@@ -170,6 +169,7 @@ const EditProfile = () => {
         />
         <Text style={styles.changeImageText}>Change Image</Text>
       </TouchableOpacity>
+      <View style={styles.innercontainer}>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -209,10 +209,11 @@ const EditProfile = () => {
         onChangeText={(text) => handleChange('country', text)}
       />
       <Button
-        title={isLoading ? 'Saving...' : 'Save'}  // Show loading indicator text
+        title={isLoading ? 'Saving...' : 'Save'}
         onPress={handleSubmit}
-        disabled={isLoading}  // Disable button while loading
+        disabled={isLoading}
       />
+      </View>
     </View>
   );
 };
@@ -222,13 +223,15 @@ export default EditProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 30,
+  },
+  innercontainer: {
+    paddingHorizontal: 20,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    padding: 20,
   },
   imagePicker: {
     alignItems: 'center',
