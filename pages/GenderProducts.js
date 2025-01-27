@@ -3,11 +3,9 @@ import { View, Text, FlatList, Image, TouchableOpacity, Alert, StyleSheet, Scrol
 import AuthContext from "../context/AuthContext";
 import MyNavbar from "../components/MyNavbar";
 import MyFooter from "../components/MyFooter";
-import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-import { SearchBar } from "react-native-screens";
-import Gender from "../components/Gender";
 import { useNavigation } from '@react-navigation/native';
+import SearchBarComp from "../components/SearchBarComp";
 
 const HomePage = ({route}) => {
   const [items, setItems] = useState([]);
@@ -53,7 +51,7 @@ const HomePage = ({route}) => {
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
       
-      {/* <Gender navigation={navigation}/> */}
+      <SearchBarComp />
 
       <Text style={styles.header}>items for {gender}</Text>
 
