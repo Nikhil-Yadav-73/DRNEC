@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { GestureHandlerRootView } from "react-native-gesture-handler"; // Import GestureHandlerRootView
 import { AuthProvider } from "./context/AuthContext"; 
 import HomePage from "./pages/HomePage"; 
 import LoginPage from "./pages/LoginPage";
@@ -17,11 +18,13 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <AuthProvider> 
-        <AppNavigator />
-      </AuthProvider>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}> {/* Wrap everything with GestureHandlerRootView */}
+      <NavigationContainer>
+        <AuthProvider> 
+          <AppNavigator />
+        </AuthProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 

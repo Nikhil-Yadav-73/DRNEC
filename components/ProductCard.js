@@ -1,31 +1,55 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductCard = ({ id, name, price, image, rating, reviews }) => {
+const ProductCard = ({ id, name, price, image, rating, reviews, onAddToCart }) => {
   const navigation = useNavigation();
+  const translateX = new Animated.Value(0);
 
+  // Handle swipe gesture
+  const handleGesture = Animated.event(
+    [{ nativeEvent: { translationX: translateX } }],
+    { useNativeDriver: true }
+  );
+
+  // Handle gesture end (check for right swipe threshold)
+  const handleGestureEnd = ({ nativeEvent }) => {
+    if (nativeEvent.translationX > 100) {
+      onAddToCart(id); // Call the add-to-cart function
+    }
+
+    // Reset card position after gesture ends
+    Animated.spring(translateX, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  // Handle navigation to product description
   const handlePress = () => {
     navigation.navigate('ItemDesc', { productId: id });
   };
 
   return (
-    <View style={styles.card}>
-      <TouchableOpacity onPress={handlePress}>
-        <Image
-          style={styles.image}
-          source={{ uri: image || 'https://via.placeholder.com/150' }}
-          alt={name}
-        />
-      </TouchableOpacity>
-      <View style={styles.cardBody}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.price}>₹ {price}</Text>
-      </View>
-      {/* <TouchableOpacity onPress={handlePress} style={styles.button}>
-        <Text style={styles.buttonText}>View Product</Text>
-      </TouchableOpacity> */}
-    </View>
+    <PanGestureHandler
+      onGestureEvent={handleGesture}
+      onEnded={handleGestureEnd}
+    >
+      <Animated.View style={[styles.card, { transform: [{ translateX }] }]}>
+        <TouchableOpacity onPress={handlePress}>
+          <Image
+            style={styles.image}
+            source={{ uri: image || 'https://via.placeholder.com/150' }}
+            alt={name}
+          />
+        </TouchableOpacity>
+        <View style={styles.cardBody}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.price}>₹ {price}</Text>
+        </View>
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
@@ -38,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     backgroundColor: '#fff',
+    elevation: 3,
   },
   image: {
     width: '100%',
@@ -55,18 +80,6 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     color: 'green',
-  },
-  button: {
-    backgroundColor: '#007bff',
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
 });
 

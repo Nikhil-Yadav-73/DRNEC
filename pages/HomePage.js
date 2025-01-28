@@ -16,13 +16,14 @@ const HomePage = ({ route }) => {
   const [categories, setCategories] = useState([]);
   const [homeItems, setHomeItems] = useState([]);
   const [showAnimation, setShowAnimation] = useState(route.params.firstTimeToggle);
-  const { authTokens, logoutUser } = useContext(AuthContext);
+  const { user, authTokens, logoutUser } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 5;
   const navigation = useNavigation();
   const fadeAnim = new Animated.Value(1);
   const {checkoutSuccess} = route.params;
   const [showMessage, setShowMessage] = useState(checkoutSuccess);
+  const [addToCart, setAddToCart] = useState(false);
 
   useEffect(() => {
     if (showAnimation) {
@@ -55,6 +56,24 @@ const HomePage = ({ route }) => {
       }
     } catch (error) {
       console.error("Error fetching home items:", error);
+    }
+  };
+
+  const handleAddToCart = async (productId) => {
+    try {
+      const response = await fetch(`http://192.168.1.8:8000/api/items/add_to_cart/${user.user_id}/${productId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (response.ok) {
+        setAddToCart(true);
+        setTimeout(() => setAddToCart(false), 1300);
+      } else {
+        console.error("Failed to add item to cart");
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
     }
   };
 
@@ -112,11 +131,28 @@ const HomePage = ({ route }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <MyNavbar />
       {showMessage && <TempMsg message="Checkout Successful !" duration={2500} onClose={() => setShowMessage(false)}/>}
+      {addToCart && <TempMsg message="Added to Cart !" duration={2000} onClose={() => setAddToCart(false)}/>}
       <SearchBarComp />
 
       <CarouselComp categories={categories}/>
 
       <Gender navigation={navigation} />
+
+      {/* <View style={styles.productGrid}>
+        {homeItems.map((homeItem) => (
+          <ProductCard
+            key={homeItem.id}
+            id={homeItem.id}
+            name={homeItem.name}
+            price={homeItem.price}
+            image={homeItem.image}
+            rating={homeItem.rating}
+            reviews={homeItem.reviews}
+            link1={homeItem.link1}
+            link2={homeItem.link2}
+          />
+        ))}
+      </View> */}
 
       <View style={styles.productGrid}>
         {homeItems.map((homeItem) => (
@@ -130,6 +166,7 @@ const HomePage = ({ route }) => {
             reviews={homeItem.reviews}
             link1={homeItem.link1}
             link2={homeItem.link2}
+            onAddToCart={handleAddToCart} // Pass the function
           />
         ))}
       </View>
